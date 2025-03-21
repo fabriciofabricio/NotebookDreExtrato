@@ -26,7 +26,7 @@ const sidebarToggle = document.getElementById('sidebarToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
 const inputArquivo = document.getElementById('inputArquivo');
-const btnProcessarExtrato = document.getElementById('btnProcessarExtrato');
+const btnSelecionarPeriodo = document.getElementById('btnSelecionarPeriodo'); // Alterado: btnProcessarExtrato → btnSelecionarPeriodo
 const btnExportarDRE = document.getElementById('btnExportarDRE');
 const btnExportarRelatorioDRE = document.getElementById('btnExportarRelatorioDRE');
 const btnSalvarCategorias = document.getElementById('btnSalvarCategorias');
@@ -40,21 +40,36 @@ document.addEventListener('DOMContentLoaded', function() {
   loadingOverlay.style.display = 'none';
   
   // Toggle sidebar
-  sidebarToggle.addEventListener('click', function() {
-    sidebar.classList.toggle('toggled');
-    content.classList.toggle('toggled');
-  });
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('toggled');
+      content.classList.toggle('toggled');
+    });
+  }
   
   // Eventos
-  btnProcessarExtrato.addEventListener('click', function() {
-    inputArquivo.click();
-  });
+  // Alterado: Removido o evento para btnProcessarExtrato
+  // Vamos verificar se inputArquivo existe antes de adicionar o event listener
+  if (inputArquivo) {
+    inputArquivo.addEventListener('change', processarExtrato);
+  }
   
-  inputArquivo.addEventListener('change', processarExtrato);
-  btnExportarDRE.addEventListener('click', exportarDRE);
-  btnExportarRelatorioDRE.addEventListener('click', exportarDRE);
-  btnSalvarCategorias.addEventListener('click', salvarCategorizacao);
-  btnSalvarCategoriasMudancas.addEventListener('click', salvarCategorizacao);
+  // Verificar se cada elemento existe antes de adicionar os event listeners
+  if (btnExportarDRE) {
+    btnExportarDRE.addEventListener('click', exportarDRE);
+  }
+  
+  if (btnExportarRelatorioDRE) {
+    btnExportarRelatorioDRE.addEventListener('click', exportarDRE);
+  }
+  
+  if (btnSalvarCategorias) {
+    btnSalvarCategorias.addEventListener('click', salvarCategorizacao);
+  }
+  
+  if (btnSalvarCategoriasMudancas) {
+    btnSalvarCategoriasMudancas.addEventListener('click', salvarCategorizacao);
+  }
   
   // Inicializar dropdown de categorias
   atualizarDropdownCategorias();

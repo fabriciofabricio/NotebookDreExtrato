@@ -1,6 +1,9 @@
 // categorias.js - Mapeamento de fornecedores para categorias
 const mapeamentoCategorias = {
+  // Receitas
   "IFOOD": "Receitas IFOOD",
+  
+  // Mapeamento de fornecedores para categorias
   "STONE PAGAMENTOS S.A.": "Seguro",
   "Stone Pagamentos S.A.": "Seguro",
   "BEM MAIS ALIMENTOS": "Ingredientes Frios",
@@ -233,10 +236,7 @@ const mapeamentoCategorias = {
   "FACEBOOK ADS": "Anúncio",
   "Facebook ads": "Anúncio",
   "fb ads": "Anúncio",
-  "FB ADS": "Anúncio",
-  "SION COOPERATIVA DE ENERGIA": "Energia Elétrica",
-  "HELLOGRAFF ARTES GRAFICAS LTDA": "Serviços Gráficos",
-  "ADRIELLY GOMES PIRES 05121269927": "Artístico"
+  "FB ADS": "Anúncio"
 };
 
 // Estrutura de organização do DRE
@@ -247,13 +247,13 @@ const estruturaDRE = {
     "Aporte Sócio"
   ],
   "Custos Diretos": [
-    "Ingredientes Frios",
-    "Ingredientes Secos",
-    "Carnes",
-    "Hortifruti",
-    "Chopp",
-    "Bebidas",
-    "Doces",
+    "Ingredientes Frios", 
+    "Ingredientes Secos", 
+    "Carnes", 
+    "Hortifruti", 
+    "Chopp", 
+    "Bebidas", 
+    "Doces", 
     "Embalagem/Descartável"
   ],
   "Despesas de Vendas": [

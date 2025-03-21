@@ -328,7 +328,7 @@ app.delete('/api/periodo/:periodo', (req, res) => {
 });
 
 // Função para migrar registros antigos para o novo formato (utilitário)
-app .get('/api/migrar-registros', (req, res) => {
+app.get('/api/migrar-registros', (req, res) => {
   const registroPath = path.join(__dirname, 'uploads', 'registro_periodos.json');
   
   if (!fs.existsSync(registroPath)) {
@@ -372,6 +372,117 @@ app .get('/api/migrar-registros', (req, res) => {
     res.status(500).json({ 
       success: false, 
       message: 'Erro ao migrar registros',
+      error: error.message
+    });
+  }
+});
+
+// Endpoint para salvar categorizações no arquivo categorias.js
+app.post('/api/salvar-categorias', (req, res) => {
+  try {
+    const { mapeamentoCategorias, categoriasPersonalizadas } = req.body;
+    
+    if (!mapeamentoCategorias || !categoriasPersonalizadas) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Dados incompletos. Ambos mapeamentoCategorias e categoriasPersonalizadas são necessários.'
+      });
+    }
+    
+    // Caminho para o arquivo categorias.js
+    const categoriasPath = path.join(__dirname, '../categorias.js');
+    
+    // Verificar se o arquivo existe
+    if (!fs.existsSync(categoriasPath)) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Arquivo categorias.js não encontrado'
+      });
+    }
+    
+    // Criar conteúdo do arquivo
+    const conteudo = `// categorias.js - Mapeamento de fornecedores para categorias
+const mapeamentoCategorias = ${JSON.stringify(mapeamentoCategorias, null, 2)};
+
+// Estrutura de organização do DRE
+const estruturaDRE = ${JSON.stringify(req.body.estruturaDRE || {
+  "Receitas": [
+    "Receitas IFOOD",
+    "Crédito/Débito/Pix",
+    "Aporte Sócio"
+  ],
+  "Custos Diretos": [
+    "Ingredientes Frios", 
+    "Ingredientes Secos", 
+    "Carnes", 
+    "Hortifruti", 
+    "Chopp", 
+    "Bebidas", 
+    "Doces", 
+    "Embalagem/Descartável"
+  ],
+  "Despesas de Vendas": [
+    "Propaganda e Publicidade",
+    "Anúncio",
+    "Free Lance/taxa",
+    "Artístico"
+  ],
+  "Despesas Administrativas": [
+    "Material de Reposição",
+    "Material de Limpeza/Higiene",
+    "Manutenção Predial",
+    "Manutenção de Informática",
+    "Manutenção de Equipamentos",
+    "Manutenção Móveis e Utensílios",
+    "Sistema Cenna",
+    "Material de Escritório",
+    "Consultoria/Assessoria",
+    "Contabilidade",
+    "Advogado",
+    "Locação Equipamentos",
+    "Outras despesas ADM"
+  ],
+  "Despesas com Infraestrutura": [
+    "Aluguel",
+    "Condomínio",
+    "Energia Elétrica",
+    "Gás",
+    "Telefone e TV a Cabo",
+    "Serviços Gráficos",
+    "Dedetização",
+    "Seguro",
+    "Aquisição de Equipamentos",
+    "Combustível"
+  ],
+  "Despesas Financeiras": [
+    "Despesa Bancária"
+  ],
+  "Despesas com Sócios": [
+    "Despesas Sócios"
+  ],
+  "Impostos": [
+    "Imposto de Renda",
+    "DAS"
+  ]
+}, null, 2)};`;
+    
+    // Fazer backup do arquivo original
+    const backupPath = `${categoriasPath}.backup-${Date.now()}.js`;
+    fs.copyFileSync(categoriasPath, backupPath);
+    
+    // Escrever o novo conteúdo no arquivo
+    fs.writeFileSync(categoriasPath, conteudo);
+    
+    res.json({ 
+      success: true, 
+      message: 'Categorizações salvas com sucesso no arquivo categorias.js',
+      backupPath: path.basename(backupPath)
+    });
+  } catch (error) {
+    console.error('Erro ao salvar categorizações:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Erro ao salvar categorizações no arquivo',
       error: error.message
     });
   }
