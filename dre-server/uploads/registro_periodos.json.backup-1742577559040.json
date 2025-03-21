@@ -1,0 +1,128 @@
+[
+  {
+    "periodo": "2025-02",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517004585.xlsx",
+    "nomeOriginal": "ExtratoFevereiro2025.xlsx",
+    "tamanho": 71803,
+    "dataUpload": "2025-03-21T00:30:04.595Z",
+    "caminhoRelativo": "2025\\02\\2025-01-1742517004585.xlsx",
+    "nomeArquivo": "2025-01-1742517004585.xlsx"
+  },
+  {
+    "periodo": "2025-01",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517053785.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (2).xlsx",
+    "tamanho": 66757,
+    "dataUpload": "2025-03-21T00:30:53.790Z",
+    "caminhoRelativo": "2025\\01\\2025-01-1742517053785.xlsx",
+    "nomeArquivo": "2025-01-1742517053785.xlsx"
+  },
+  {
+    "periodo": "2024-12",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517074234.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (3).xlsx",
+    "tamanho": 69299,
+    "dataUpload": "2025-03-21T00:31:14.238Z",
+    "caminhoRelativo": "2024\\12\\2025-01-1742517074234.xlsx",
+    "nomeArquivo": "2025-01-1742517074234.xlsx"
+  },
+  {
+    "periodo": "2024-11",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517224198.xlsx",
+    "nomeOriginal": "Comprovante de Extrato.xlsx",
+    "tamanho": 73086,
+    "dataUpload": "2025-03-21T00:33:44.202Z",
+    "caminhoRelativo": "2024\\11\\2025-01-1742517224198.xlsx",
+    "nomeArquivo": "2025-01-1742517224198.xlsx"
+  },
+  {
+    "periodo": "2024-10",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517310218.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (4).xlsx",
+    "tamanho": 70930,
+    "dataUpload": "2025-03-21T00:35:10.223Z",
+    "caminhoRelativo": "2024\\10\\2025-01-1742517310218.xlsx",
+    "nomeArquivo": "2025-01-1742517310218.xlsx"
+  },
+  {
+    "periodo": "2024-09",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517521585.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (5).xlsx",
+    "tamanho": 70644,
+    "dataUpload": "2025-03-21T00:38:41.590Z",
+    "caminhoRelativo": "2024\\09\\2025-01-1742517521585.xlsx",
+    "nomeArquivo": "2025-01-1742517521585.xlsx"
+  },
+  {
+    "periodo": "2024-08",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517654165.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (6).xlsx",
+    "tamanho": 67079,
+    "dataUpload": "2025-03-21T00:40:54.169Z",
+    "caminhoRelativo": "2024\\08\\2025-01-1742517654165.xlsx",
+    "nomeArquivo": "2025-01-1742517654165.xlsx"
+  },
+  {
+    "periodo": "2024-07",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517729257.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (7).xlsx",
+    "tamanho": 63294,
+    "dataUpload": "2025-03-21T00:42:09.263Z",
+    "caminhoRelativo": "2024\\07\\2025-01-1742517729257.xlsx",
+    "nomeArquivo": "2025-01-1742517729257.xlsx"
+  },
+  {
+    "periodo": "2024-06",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517805807.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (8).xlsx",
+    "tamanho": 67187,
+    "dataUpload": "2025-03-21T00:43:25.811Z",
+    "caminhoRelativo": "2024\\06\\2025-01-1742517805807.xlsx",
+    "nomeArquivo": "2025-01-1742517805807.xlsx"
+  },
+  {
+    "periodo": "2024-05",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517862892.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (9).xlsx",
+    "tamanho": 64843,
+    "dataUpload": "2025-03-21T00:44:22.897Z",
+    "caminhoRelativo": "2024\\05\\2025-01-1742517862892.xlsx",
+    "nomeArquivo": "2025-01-1742517862892.xlsx"
+  },
+  {
+    "periodo": "2024-04",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742517930326.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (10).xlsx",
+    "tamanho": 66810,
+    "dataUpload": "2025-03-21T00:45:30.330Z",
+    "caminhoRelativo": "2024\\04\\2025-01-1742517930326.xlsx",
+    "nomeArquivo": "2025-01-1742517930326.xlsx"
+  },
+  {
+    "periodo": "2024-03",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742518018338.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (11).xlsx",
+    "tamanho": 65571,
+    "dataUpload": "2025-03-21T00:46:58.343Z",
+    "caminhoRelativo": "2024\\03\\2025-01-1742518018338.xlsx",
+    "nomeArquivo": "2025-01-1742518018338.xlsx"
+  },
+  {
+    "periodo": "2024-02",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742518065776.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (12).xlsx",
+    "tamanho": 49290,
+    "dataUpload": "2025-03-21T00:47:45.792Z",
+    "caminhoRelativo": "2024\\02\\2025-01-1742518065776.xlsx",
+    "nomeArquivo": "2025-01-1742518065776.xlsx"
+  },
+  {
+    "periodo": "2024-01",
+    "caminhoArquivo": "C:\\Users\\Fabricio\\Documents\\Codigo DRE Final\\dre-server\\uploads\\2025\\01\\2025-01-1742518188320.xlsx",
+    "nomeOriginal": "Comprovante de Extrato (13).xlsx",
+    "tamanho": 40328,
+    "dataUpload": "2025-03-21T00:49:48.325Z",
+    "caminhoRelativo": "2024\\01\\2025-01-1742518188320.xlsx",
+    "nomeArquivo": "2025-01-1742518188320.xlsx"
+  }
+]

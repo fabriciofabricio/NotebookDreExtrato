@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard DRE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- Estilos CSS -->
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+  </div>
+
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-chart-pie me-2"></i>
+        <span>Dashboard DRE</span>
+      </div>
+      
+      <hr class="sidebar-divider">
+      
+      <div class="sidebar-heading">
+        Gerenciamento
+      </div>
+      
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#relatorio" data-bs-toggle="tab">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>Relatório DRE</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#detalhes-categoria" data-bs-toggle="tab">
+            <i class="fas fa-fw fa-list"></i>
+            <span>Detalhes por Categoria</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#itens-nao-categorizados" data-bs-toggle="tab">
+            <i class="fas fa-fw fa-exclamation-triangle"></i>
+            <span>Itens não Categorizados</span>
+          </a>
+        </li>
+      </ul>
+      
+      <hr class="sidebar-divider">
+      
+      <div class="sidebar-heading">
+        Ferramentas
+      </div>
+      
+      <ul class="nav flex-column">
+        <!-- Adicionado: Gerenciador de Períodos movido para Ferramentas -->
+        <li class="nav-item">
+          <a class="nav-link" href="#gerenciador-periodos" data-bs-toggle="tab">
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Gerenciador de Períodos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btnExportarDRE">
+            <i class="fas fa-fw fa-file-excel"></i>
+            <span>Exportar DRE</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btnSalvarCategorias">
+            <i class="fas fa-fw fa-save"></i>
+            <span>Salvar Categorias</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Content -->
+    <div class="content" id="content">
+      <div class="navbar-top">
+        <button class="btn btn-link" id="sidebarToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div>
+          <!-- Modificado: Mudou "Selecionar Arquivo" para "Selecionar Período" -->
+          <div class="input-group">
+            <button class="btn btn-outline-primary" id="btnSelecionarPeriodo">
+              <i class="fas fa-calendar me-2"></i>Selecionar Período
+            </button>
+            <input type="file" class="form-control" id="inputArquivo" accept=".xlsx" style="display: none;">
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content">
+        <!-- Dashboard -->
+        <div class="tab-pane fade show active" id="dashboard">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard DRE</h1>
+            <div id="periodoInfo" class="text-secondary">Período: -</div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="dashboard-card card-left-success">
+                <div class="dashboard-card-header">Receitas</div>
+                <div class="dashboard-card-body">
+                  <div>
+                    <div class="dashboard-card-value" id="totalReceitas">R$ 0,00</div>
+                    <div class="dashboard-card-subtitle">Total de receitas no período</div>
+                  </div>
+                  <div class="mt-2 small">
+                    <span class="me-2" id="receitasIfood">IFOOD: R$ 0,00</span>
+                    <span id="receitasCredito">Crédito/Débito: R$ 0,00</span>
+                  </div>
+                  <div class="mt-1 small" id="aportesSocios">Aportes: Elcio: R$ 0,00 | Sidinei: R$ 0,00</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="dashboard-card card-left-info">
+                <div class="dashboard-card-header">Custos Diretos</div>
+                <div class="dashboard-card-body">
+                  <div>
+                    <div class="dashboard-card-value" id="totalCustos">R$ 0,00</div>
+                    <div class="dashboard-card-subtitle">Total de custos diretos</div>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-info" id="custosProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="small" id="custosPercentual">0% das receitas</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="dashboard-card card-left-primary">
+                <div class="dashboard-card-header">Lucro Bruto</div>
+                <div class="dashboard-card-body">
+                  <div>
+                    <div class="dashboard-card-value" id="lucroBruto">R$ 0,00</div>
+                    <div class="dashboard-card-subtitle">Receitas - Custos Diretos</div>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" id="lucroProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="small" id="lucroPercentual">0% das receitas</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="dashboard-card card-left-warning">
+                <div class="dashboard-card-header">Resultado Final</div>
+                <div class="dashboard-card-body">
+                  <div>
+                    <div class="dashboard-card-value" id="resultadoFinal">R$ 0,00</div>
+                    <div class="dashboard-card-subtitle">Lucro Bruto - Despesas</div>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" id="resultadoProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="small" id="resultadoPercentual">0% das receitas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="m-0 font-weight-bold">Despesas por Categoria</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Categoria de Despesa</th>
+                          <th>Valor</th>
+                          <th>% do Total</th>
+                        </tr>
+                      </thead>
+                      <tbody id="despesasCategorias">
+                        <!-- Será preenchido via JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="m-0 font-weight-bold">Custos Diretos Detalhados</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Tipo de Custo</th>
+                          <th>Valor</th>
+                          <th>% dos Custos</th>
+                        </tr>
+                      </thead>
+                      <tbody id="custosCategorias">
+                        <!-- Será preenchido via JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row" id="alertRow">
+            <!-- Alerta sobre itens não categorizados -->
+          </div>
+        </div>
+        
+        <!-- Relatório DRE -->
+        <div class="tab-pane fade" id="relatorio">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Relatório DRE</h1>
+            <button class="btn btn-primary" id="btnExportarRelatorioDRE">
+              <i class="fas fa-download me-2"></i>Exportar Relatório
+            </button>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h6 class="m-0 font-weight-bold">Demonstrativo de Resultados do Exercício</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 25%">Grupo</th>
+                      <th style="width: 50%">Categoria</th>
+                      <th style="width: 25%">Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelaDRE">
+                    <!-- Será preenchido via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Detalhes por Categoria -->
+        <div class="tab-pane fade" id="detalhes-categoria">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Detalhes por Categoria</h1>
+            <div class="dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCategoria" data-bs-toggle="dropdown" aria-expanded="false">
+                Selecionar Categoria
+              </button>
+              <ul class="dropdown-menu" id="menuCategorias" aria-labelledby="dropdownCategoria">
+                <!-- Será preenchido via JavaScript -->
+              </ul>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h6 class="m-0 font-weight-bold" id="tituloCategoriaDetalhes">Selecione uma categoria</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Fornecedor/Destino</th>
+                      <th>Data/Hora</th>
+                      <th>Valor</th>
+                      <th>% da Categoria</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detalhesCategoriaBody">
+                    <!-- Será preenchido via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Itens não Categorizados -->
+        <div class="tab-pane fade" id="itens-nao-categorizados">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Itens não Categorizados</h1>
+            <button class="btn btn-success" id="btnSalvarCategoriasMudancas">
+              <i class="fas fa-save me-2"></i>Salvar Alterações
+            </button>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h6 class="m-0 font-weight-bold">Gerenciar itens sem categoria</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Fornecedor/Destino</th>
+                      <th>Data/Hora</th>
+                      <th>Valor</th>
+                      <th>Nova Categoria</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="itemsCategorization">
+                    <!-- Será preenchido via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gerenciador de Períodos -->
+        <div class="tab-pane fade" id="gerenciador-periodos">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Gerenciador de Períodos</h1>
+            <div class="d-flex">
+              <select class="form-select me-2" id="seletorPeriodo">
+                <option value="">Selecione um período</option>
+                <!-- Será preenchido via JavaScript -->
+              </select>
+              <button class="btn btn-primary" id="btnCarregarPeriodo">
+                <i class="fas fa-sync me-2"></i>Carregar Período
+              </button>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="m-0 font-weight-bold">Adicionar Novo Período</h6>
+                </div>
+                <div class="card-body">
+                  <form id="formNovoPeriodo">
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label for="mesPeriodo" class="form-label">Mês</label>
+                        <select class="form-select" id="mesPeriodo" required>
+                          <option value="">Selecione o mês</option>
+                          <option value="1">Janeiro</option>
+                          <option value="2">Fevereiro</option>
+                          <option value="3">Março</option>
+                          <option value="4">Abril</option>
+                          <option value="5">Maio</option>
+                          <option value="6">Junho</option>
+                          <option value="7">Julho</option>
+                          <option value="8">Agosto</option>
+                          <option value="9">Setembro</option>
+                          <option value="10">Outubro</option>
+                          <option value="11">Novembro</option>
+                          <option value="12">Dezembro</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="anoPeriodo" class="form-label">Ano</label>
+                        <input type="number" class="form-select" id="anoPeriodo" min="2020" max="2030" value="2025" required>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="arquivoPeriodo" class="form-label">Extrato Bancário (XLSX)</label>
+                      <input type="file" class="form-control" id="arquivoPeriodo" accept=".xlsx" required>
+                    </div>
+                    <div class="mb-3">
+                      <button type="submit" class="btn btn-success w-100" id="btnAdicionarPeriodo">
+                        <i class="fas fa-plus-circle me-2"></i>Adicionar Período
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="m-0 font-weight-bold">Períodos Disponíveis</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Período</th>
+                          <th>Data de Processamento</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody id="listaPeriodos">
+                        <!-- Será preenchido via JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de Categorização -->
+  <div class="modal fade" id="categorizacaoModal" tabindex="-1" aria-labelledby="categorizacaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categorizacaoModalLabel">Categorizar Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formCategorizacao">
+            <div class="mb-3">
+              <label for="fornecedorModal" class="form-label">Fornecedor/Destino</label>
+              <input type="text" class="form-control" id="fornecedorModal" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="dataHoraModal" class="form-label">Data/Hora</label>
+              <input type="text" class="form-control" id="dataHoraModal" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="valorModal" class="form-label">Valor</label>
+              <input type="text" class="form-control" id="valorModal" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="categoriaModal" class="form-label">Categoria</label>
+              <select class="form-select" id="categoriaModal">
+                <!-- Será preenchido via JavaScript -->
+              </select>
+            </div>
+            <div class="mb-3" id="customCategoryInputGroup">
+              <label for="customCategoryInput" class="form-label">Nova Categoria</label>
+              <input type="text" class="form-control" id="customCategoryInput" placeholder="Digite o nome da nova categoria">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnSalvarCategorizacao">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Seleção de Período -->
+  <div class="modal fade" id="selecionarPeriodoModal" tabindex="-1" aria-labelledby="selecionarPeriodoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="selecionarPeriodoModalLabel">Selecionar Período</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="periodoModal" class="form-label">Escolha um período</label>
+            <select class="form-select" id="periodoModal">
+              <!-- Será preenchido via JavaScript com os mesmos períodos do seletorPeriodo -->
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnCarregarPeriodoModal">Carregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Scripts da aplicação - ORDEM CORRIGIDA -->
+  <script src="assets/js/utils.js"></script>
+  <script src="categorias.js"></script>
+  <script src="assets/js/periodos.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/main.js"></script>
+  
+  <!-- Script adicional para o modal de seleção de período -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Botão Selecionar Período no topo
+      const btnSelecionarPeriodo = document.getElementById('btnSelecionarPeriodo');
+      if (btnSelecionarPeriodo) {
+        btnSelecionarPeriodo.addEventListener('click', function() {
+          // Sincronizar as opções do modal com o seletor original
+          const seletorPeriodo = document.getElementById('seletorPeriodo');
+          const periodoModal = document.getElementById('periodoModal');
+          
+          if (seletorPeriodo && periodoModal) {
+            periodoModal.innerHTML = seletorPeriodo.innerHTML;
+            periodoModal.value = seletorPeriodo.value;
+          }
+          
+          // Abrir o modal
+          const modal = new bootstrap.Modal(document.getElementById('selecionarPeriodoModal'));
+          modal.show();
+        });
+      }
+      
+      // Botão Carregar no modal
+      const btnCarregarPeriodoModal = document.getElementById('btnCarregarPeriodoModal');
+      if (btnCarregarPeriodoModal) {
+        btnCarregarPeriodoModal.addEventListener('click', function() {
+          const periodoModal = document.getElementById('periodoModal');
+          const seletorPeriodo = document.getElementById('seletorPeriodo');
+          
+          if (periodoModal && seletorPeriodo) {
+            // Atualizar o seletor original com o valor escolhido no modal
+            seletorPeriodo.value = periodoModal.value;
+            
+            // Fechar o modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('selecionarPeriodoModal'));
+            modal.hide();
+            
+            // Carregar o período
+            carregarPeriodoSelecionado();
+          }
+        });
+      }
+    });
+  </script>
+  <script src="assets/js/fix-gerenciadordepedidos.js"></script>
+</body>
+</html>
