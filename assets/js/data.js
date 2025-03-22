@@ -698,4 +698,4 @@ async function salvarCategorizacao() {
     // Esconder overlay de carregamento
     loadingOverlay.style.display = 'none';
   }
-} 
+}

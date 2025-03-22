@@ -236,19 +236,7 @@ const mapeamentoCategorias = {
   "FB ADS": "Anúncio",
   "SION COOPERATIVA DE ENERGIA": "Energia Elétrica",
   "HELLOGRAFF ARTES GRAFICAS LTDA": "Serviços Gráficos",
-<<<<<<< HEAD
   "ADRIELLY GOMES PIRES 05121269927": "Artístico"
-=======
-  "ADRIELLY GOMES PIRES 05121269927": "Artístico",
-  "GOLD - INDUSTRIA E COMERCIO LTDA": "Ingredientes Frios",
-  "GOLD   INDUSTRIA E COMERCIO LT": "Ingredientes Frios",
-  "PAG*GraficaSeteBelo": "Serviços Gráficos",
-  "ISABELA FOLLMANN SILVA": "Free Lance/taxa",
-  "CERVEJARIA HRX LTDA                                        .": "Chopp",
-  "Fabricio Muller Venturi": "Free Lance/taxa",
-  "COMERCIAL EMBALAGENS": "Material de Reposição",
-  "COMERCIAL BARBANTE   PAPEL LTDA - EPP": "Embalagem/Descartável"
->>>>>>> 518084f (Backup diario do categorias.js)
 };
 
 // Estrutura de organização do DRE
