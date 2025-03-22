@@ -466,9 +466,30 @@ const estruturaDRE = ${JSON.stringify(req.body.estruturaDRE || {
   ]
 }, null, 2)};`;
     
-    // Fazer backup do arquivo original
-    const backupPath = `${categoriasPath}.backup-${Date.now()}.js`;
-    fs.copyFileSync(categoriasPath, backupPath);
+    // Verificar se precisamos criar um backup hoje
+    let backupPath = null;
+    let backupCriado = false;
+    
+    // Pasta de backups
+    const backupDir = path.join(__dirname, '../backups');
+    if (!fs.existsSync(backupDir)) {
+      fs.mkdirSync(backupDir, { recursive: true });
+    }
+    
+    // Formato da data atual: YYYY-MM-DD
+    const hoje = new Date().toISOString().split('T')[0];
+    const backupDiario = path.join(backupDir, `categorias.backup-${hoje}.js`);
+    
+    // Verificar se já existe um backup para hoje
+    if (!fs.existsSync(backupDiario)) {
+      // Criar backup com a data de hoje
+      backupPath = backupDiario;
+      fs.copyFileSync(categoriasPath, backupPath);
+      backupCriado = true;
+      console.log(`Backup diário criado: ${backupPath}`);
+    } else {
+      console.log(`Backup diário já existe para ${hoje}, pulando criação`);
+    }
     
     // Escrever o novo conteúdo no arquivo
     fs.writeFileSync(categoriasPath, conteudo);
@@ -476,7 +497,8 @@ const estruturaDRE = ${JSON.stringify(req.body.estruturaDRE || {
     res.json({ 
       success: true, 
       message: 'Categorizações salvas com sucesso no arquivo categorias.js',
-      backupPath: path.basename(backupPath)
+      backupCriado: backupCriado,
+      backupPath: backupCriado ? path.basename(backupPath) : null
     });
   } catch (error) {
     console.error('Erro ao salvar categorizações:', error);
